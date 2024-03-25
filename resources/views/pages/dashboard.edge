@@ -1,0 +1,22 @@
+<div class="container my-5 d-flex flex-row flex-wrap justify-content-around">
+    @each(product in products)
+        @!component('components/product-card', { product: product })
+    @endeach
+</div>
+
+<h4>Endpoints:</h4>
+<ul>
+    <li>/ (dashboard)</li>
+    <li>item/:hash</li>
+    
+    <li>login</li>
+    <li>register</li>
+
+    <li>profile/add</li>
+    <li>profile/items</li>
+    <li>profile/chats</li>
+    <li>profile/settings</li>
+    
+    <li>404</li>
+    <li>item/:id/chat ???</li>
+</ul>
