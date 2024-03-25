@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js';
 // import db from '@adonisjs/lucid/services/db'
 // import hash from '@adonisjs/core/services/hash'
 
@@ -21,35 +22,63 @@ router.get('/', async ({ view }) => {
     return view.render('layouts/main', { page: 'pages/dashboard', products: products });
 });
 
-router.get('/item/:hash', async ({ view , params }) => {
+router.get('/item/:hash', async ({ view, params }) => {
     return view.render('layouts/main', { page: 'pages/item-viewer', params: params });
 });
 
-router.get('/login', async ({ view }) => {
-    return view.render('layouts/main', { page: 'pages/login' });
-});
+// for unauthenticated users only
 
-router.get('/register', async ({ view }) => {
-    return view.render('layouts/main', { page: 'pages/register' });
-});
+router
+    .get('/login', async ({ view }) => {
+        return view.render('layouts/main', { page: 'pages/auth/login' });
+    })
+    .use(middleware.guest({
+        guards: ['web']
+    }));
 
-router.get('/profile/add', async ({ view }) => {
-    return view.render('layouts/main', { page: 'pages/profile/add-item' });
-});
+router
+    .get('/register', async ({ view }) => {
+        return view.render('layouts/main', { page: 'pages/auth/register' });
+    })
+    .use(middleware.guest({
+        guards: ['web']
+    }));;
 
-router.get('/profile/items', async ({ view }) => {
-    const products = [
-        { hash: 'werdsghh', title: 'Schreibtisch', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' },
-    ];
+// for authenticated users only
 
-    return view.render('layouts/main', { page: 'pages/dashboard', products: products });
-});
+router
+    .get('/profile/add', async ({ view }) => {
+        return view.render('layouts/main', { page: 'pages/profile/add-item' });
+    })
+    .use(middleware.auth({
+        guards: ['web']
+    }));
 
-router.get('/profile/chats', async ({ view }) => {
-    return view.render('layouts/main', { page: 'pages/profile/chats-overview' });
-});
+router
+    .get('/profile/items', async ({ view }) => {
+        const products = [
+            { hash: 'werdsghh', title: 'Schreibtisch', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' },
+        ];
 
-router.get('/profile/settings', async ({ view }) => {
-    return view.render('layouts/main', { page: 'pages/profile/settings' });
-});
+        return view.render('layouts/main', { page: 'pages/dashboard', products: products });
+    })
+    .use(middleware.auth({
+        guards: ['web']
+    }));
+
+router
+    .get('/profile/chats', async ({ view }) => {
+        return view.render('layouts/main', { page: 'pages/profile/chats-overview' });
+    })
+    .use(middleware.auth({
+        guards: ['web']
+    }));
+
+router
+    .get('/profile/settings', async ({ view }) => {
+        return view.render('layouts/main', { page: 'pages/profile/settings' });
+    })
+    .use(middleware.auth({
+        guards: ['web']
+    }));
 

@@ -25,7 +25,7 @@
               Profil
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              @if(!auth.user)
+              @if(auth.user)
                 <li><a class="dropdown-item" href="/profile/items">Meine Anzeigen</a></li>
                 <li><a class="dropdown-item" href="/profile/chats">Meine Chats</a></li>
                 <li><hr class="dropdown-divider"></li>
