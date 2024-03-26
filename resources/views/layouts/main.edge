@@ -25,13 +25,14 @@
               Profil
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              @if(auth.user)
+              @if(auth.isAuthenticated)
                 <li><a class="dropdown-item" href="/profile/items">Meine Anzeigen</a></li>
                 <li><a class="dropdown-item" href="/profile/chats">Meine Chats</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/profile/add">Anzeige aufgeben</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/profile/settings">Einstellungen</a></li>
+                <li><a class="dropdown-item" href="/profile/logout">Abmelden</a></li>
               @else
                 <li><a class="dropdown-item" href="/register">Register</a></li>
                 <li><a class="dropdown-item" href="/login">Login</a></li>
@@ -43,7 +44,7 @@
     </nav>
   </header>
 
-  <main>    
+  <main>
     @include(page)
   </main>
 

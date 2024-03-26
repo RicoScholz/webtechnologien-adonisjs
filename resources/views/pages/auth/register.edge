@@ -1,1 +1,16 @@
-<h1>Register</h1>
+<form class="container" action="{{ route('auth.register') }}" method="POST">
+    <div class="mb-3">
+        <label for="fullNameInput" class="form-label">Name</label>
+        <input type="text" class="form-control" id="fullNameInput" name="fullName">
+    </div>
+    <div class="mb-3">
+        <label for="emailInput" class="form-label">E-Mail</label>
+        <input type="email" class="form-control" id="emailInput" name="email">
+    </div>
+    <div class="mb-3">
+        <label for="passwordInput" class="form-label">Passwort</label>
+        <input type="password" class="form-control" id="passwordInput" name="password">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

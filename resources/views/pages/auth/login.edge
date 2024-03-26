@@ -1,1 +1,12 @@
-<h1>Login</h1>
+<form class="container" action="{{ route('auth.login') }}" method="POST">
+    <div class="mb-3">
+        <label for="emailInput" class="form-label">E-Mail</label>
+        <input type="email" class="form-control" id="emailInput" name="email">
+    </div>
+    <div class="mb-3">
+        <label for="passwordInput" class="form-label">Passwort</label>
+        <input type="password" class="form-control" id="passwordInput" name="password">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
