@@ -83,7 +83,7 @@ router
     .use(middleware.auth());
 
 router
-    .get('/profile/logout', async ({ response, auth }) => {
+    .get('/logout', async ({ response, auth }) => {
         await auth.use('web').logout()
         return response.redirect('/')
     })

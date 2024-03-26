@@ -1,4 +1,6 @@
-<form class="container" action="{{ route('auth.login') }}" method="POST">
+<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('auth.login') }}" method="POST">
+    <h4 class="text-center font-weight-bold">Willkommen zurück!</h4>
+
     <div class="mb-3">
         <label for="emailInput" class="form-label">E-Mail</label>
         <input type="email" class="form-control" id="emailInput" name="email">
@@ -8,5 +10,5 @@
         <input type="password" class="form-control" id="passwordInput" name="password">
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary mt-3">Anmelden</button>
 </form>

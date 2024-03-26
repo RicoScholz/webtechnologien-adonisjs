@@ -1,4 +1,6 @@
-<form class="container" action="{{ route('auth.register') }}" method="POST">
+<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('auth.register') }}" method="POST">
+    <h4 class="text-center font-weight-bold">Account erstellen</h4>
+
     <div class="mb-3">
         <label for="fullNameInput" class="form-label">Name</label>
         <input type="text" class="form-control" id="fullNameInput" name="fullName">
@@ -12,5 +14,5 @@
         <input type="password" class="form-control" id="passwordInput" name="password">
     </div>
 
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary mt-3">Register</button>
 </form>
