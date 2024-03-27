@@ -9,25 +9,23 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js';
-// import db from '@adonisjs/lucid/services/db'
-// import hash from '@adonisjs/core/services/hash'
+import db from '@adonisjs/lucid/services/db'
+import Item from '#models/item';
 
 router.get('/', async ({ view, auth }) => {
-    await auth.check()
-
-    const products = [
-        { hash: 'werdsghh', title: 'Schreibtisch', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' },
-        { hash: 'werefsda', title: 'asdfsad', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' },
-        { hash: 'xycvpwoe', title: 'sadlfasöldföl', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' }
-    ];
-
-    return view.render('layouts/main', { page: 'pages/dashboard', products });
-});
-
-router.get('/item/:hash', async ({ view, auth, params }) => {
     await auth.check();
 
-    return view.render('layouts/main', { params, page: 'pages/item-viewer',  });
+    const items: Item[] = await db.from('items').select('*');
+
+    return view.render('layouts/main', { page: 'pages/dashboard', items });
+});
+
+router.get('/item/:id', async ({ view, auth, params }) => {
+    await auth.check();
+
+    const item: Item = await db.from('items').select('*').where('id', params.id).first();
+
+    return view.render('layouts/main', { page: 'pages/item-viewer', item });
 });
 
 // for unauthenticated users only
@@ -55,18 +53,20 @@ router
 // for authenticated users only
 
 router
-    .get('/profile/add', async ({ view }) => {
-        return view.render('layouts/main', { page: 'pages/profile/add-item' });
-    })
+    .get('/profile/add', '#controllers/items_controller.addItemShow')
+    .as('items.add.show')
     .use(middleware.auth());
 
 router
-    .get('/profile/items', async ({ view }) => {
-        const products = [
-            { hash: 'werdsghh', title: 'Schreibtisch', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' },
-        ];
+    .post('/profile/add', '#controllers/items_controller.addItem')
+    .as('items.add')
+    .use(middleware.auth());
 
-        return view.render('layouts/main', { page: 'pages/dashboard', products: products });
+router
+    .get('/profile/items', async ({ view, auth }) => {
+        const items: Item[] = await db.from('items').select('*').where('user_id', auth.user!.id);
+
+        return view.render('layouts/main', { page: 'pages/dashboard', items });
     })
     .use(middleware.auth());
 

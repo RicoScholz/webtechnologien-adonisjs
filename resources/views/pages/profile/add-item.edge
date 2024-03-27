@@ -1,1 +1,18 @@
-<h1>Add Item</h1>
+<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('items.add') }}" method="POST">
+    <h4 class="text-center font-weight-bold">Anzeige aufgeben</h4>
+
+    <div class="mb-3">
+        <label for="titleInput" class="form-label">Titel</label>
+        <input type="text" class="form-control" id="titleInput" name="title">
+    </div>
+    <div class="mb-3">
+        <label for="descriptionInput" class="form-label">Beschreibung</label>
+        <textarea class="form-control" id="descriptionInput" name="description"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="priceInput" class="form-label">Preis</label>
+        <input type="number" class="form-control" id="priceInput" name="price" min="0.01" placeholder="00.00€">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Erstellen</button>
+</form>
