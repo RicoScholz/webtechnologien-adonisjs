@@ -1,9 +1,25 @@
 <div class="card" style="width: 18rem;">
     <img src="/assets/placeholder.svg" class="card-img-top" alt="placeholder">
     <div class="card-body">
-      <h5 class="card-title">{{ item.title }}</h5>
-      <p class="card-text">{{ item.description }}</p>
-      <p class="card-text">{{ item.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</p>
-      <a href="/item/{{ item.id }}" class="btn btn-outline-primary">Zur Anzeige</a>
+      <h5 class="card-title">{{ product.info.title }}</h5>
+      <p class="card-text">{{ product.info.description }}</p>
     </div>
-</div>  
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        von {{ product.owner.full_name }}
+      </li>
+      <li class="list-group-item">
+        <p class="card-text">{{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</p>
+      </li>
+    </ul>
+    <div class="card-body d-flex justify-content-between flex-items-center">
+      <a href="/item/{{ product.info.id }}" class="card-link">Zur Anzeige</a>
+      @if(product.editable)
+        @if(product.info.active)
+          <a href="/item/{{ product.info.id }}/deactivate" class="link-danger">Deaktivieren</a>
+        @else
+          <a href="/item/{{ product.info.id }}/activate" class="link-success">Aktivieren</a>
+        @endif
+      @endif
+    </div>
+</div>

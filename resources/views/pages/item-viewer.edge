@@ -1,1 +1,5 @@
-<h1>{{ item.title }}</h1>
+@if(product.info.active)
+    <h4>{{ product.info.title }}</h4>
+@else
+    <h4>Diese Anzeige wurde Deaktiviert!</h4>
+@endif

@@ -9,13 +9,20 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js';
-import Item from '#models/item';
 
 router.get('/', '#controllers/items_controller.allItemsShow');
 
 router.get('/item/:id', '#controllers/items_controller.singleItemShow');
 
-// for unauthenticated users only
+router
+    .get('/item/:id/deactivate', '#controllers/items_controller.deactivateItem')
+    .use(middleware.auth());
+
+router
+    .get('/item/:id/activate', '#controllers/items_controller.activateItem')
+    .use(middleware.auth());
+
+// auth
 
 router
     .get('/register', '#controllers/auth_controller.registerShow')
@@ -35,7 +42,7 @@ router
     .as('auth.login')
     .use(middleware.guest());
 
-// for authenticated users only
+// profile
 
 router
     .get('/profile/add', '#controllers/items_controller.addItemShow')
