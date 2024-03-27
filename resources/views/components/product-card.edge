@@ -3,7 +3,7 @@
     <div class="card-body">
       <h5 class="card-title">{{ item.title }}</h5>
       <p class="card-text">{{ item.description }}</p>
-      <p class="card-text">{{ item.price }}€</p>
+      <p class="card-text">{{ item.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</p>
       <a href="/item/{{ item.id }}" class="btn btn-outline-primary">Zur Anzeige</a>
     </div>
-</div>
+</div>  

@@ -9,30 +9,16 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js';
-import db from '@adonisjs/lucid/services/db'
 import Item from '#models/item';
 
-router.get('/', async ({ view, auth }) => {
-    await auth.check();
+router.get('/', '#controllers/items_controller.allItemsShow');
 
-    const items: Item[] = await db.from('items').select('*');
-
-    return view.render('layouts/main', { page: 'pages/dashboard', items });
-});
-
-router.get('/item/:id', async ({ view, auth, params }) => {
-    await auth.check();
-
-    const item: Item = await db.from('items').select('*').where('id', params.id).first();
-
-    return view.render('layouts/main', { page: 'pages/item-viewer', item });
-});
+router.get('/item/:id', '#controllers/items_controller.singleItemShow');
 
 // for unauthenticated users only
 
 router
     .get('/register', '#controllers/auth_controller.registerShow')
-    .as('auth.register.show')
     .use(middleware.guest());
 
 router
@@ -42,7 +28,6 @@ router
 
 router
     .get('/login', '#controllers/auth_controller.loginShow')
-    .as('auth.login.show')
     .use(middleware.guest());
 
 router
@@ -54,7 +39,6 @@ router
 
 router
     .get('/profile/add', '#controllers/items_controller.addItemShow')
-    .as('items.add.show')
     .use(middleware.auth());
 
 router
@@ -63,11 +47,7 @@ router
     .use(middleware.auth());
 
 router
-    .get('/profile/items', async ({ view, auth }) => {
-        const items: Item[] = await db.from('items').select('*').where('user_id', auth.user!.id);
-
-        return view.render('layouts/main', { page: 'pages/dashboard', items });
-    })
+    .get('/profile/items', '#controllers/items_controller.ownItemsShow')
     .use(middleware.auth());
 
 router
@@ -84,7 +64,7 @@ router
 
 router
     .get('/logout', async ({ response, auth }) => {
-        await auth.use('web').logout()
+        await auth.use('web').logout();
         return response.redirect('/')
     })
     .use(middleware.auth());
