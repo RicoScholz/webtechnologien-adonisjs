@@ -1,8 +1,18 @@
-import vine from '@vinejs/vine'
+import vine from '@vinejs/vine';
+
+const profilePicture = {
+  profile_picture: vine.file({
+    size: '1mb',
+    extnames: ['jpg', 'png', 'jpeg']
+  })
+};
+
+const fullName = { full_name: vine.string().trim().minLength(3) };
+const password = { password: vine.string().trim().minLength(8) };
 
 export const registerValidator = vine.compile(
   vine.object({
-    full_name: vine.string().trim().minLength(3),
+    ...fullName,
     email: vine.string().trim().email().unique(async (db, value) => {
       const user = await db
         .from('users')
@@ -10,18 +20,15 @@ export const registerValidator = vine.compile(
         .first()
       return !user
     }),
-    password: vine.string().trim().minLength(8),
+    ...password
   })
 );
 
-export const avatarValidator = vine.compile(
-  vine.object({
-    profile_picture: vine.file({ 
-      size: '1mb',
-      extnames: ['jpg', 'png', 'jpeg']
-    })
-  })
-);
+export const avatarValidator = vine.compile(vine.object({ ...profilePicture }));
+export const updateNameValidator = vine.compile(vine.object({ ...fullName }));
+export const updatePasswordValidator = vine.compile(vine.object({ ...password }));
+export const updateProfilePictureValidator = vine.compile(vine.object({ ...profilePicture }));
+
 
 export const addItemValidator = vine.compile(
   vine.object({
@@ -34,7 +41,7 @@ export const addItemValidator = vine.compile(
 export const itemImageValidator = vine.compile(
   vine.object({
     item_images: vine.array(
-      vine.file({ 
+      vine.file({
         size: '5mb',
         extnames: ['jpg', 'png', 'jpeg']
       })

@@ -1,1 +1,36 @@
-<h1>settings</h1>
+<div class="container-sm my-5 p-5 border border-1 rounded">
+    <h4 class="text-center font-weight-bold">Profil von {{ auth.user.full_name }} bearbeiten</h4>
+
+    <form class="my-5" action="{{ route('auth.update.name') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="fullNameInput" class="form-label">Name</label>
+            <div class="d-flex">
+                <input type="text" class="form-control w-100" id="fullNameInput" name="full_name">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+
+    </form>
+
+    <form class="mb-5" action="{{ route('auth.update.password') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="passwordInput" class="form-label">Passwort</label>
+            <div class="d-flex">
+                <input type="password" class="form-control w-100" id="passwordInput" name="password">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+
+    </form>
+
+    <form action="{{ route('auth.update.profilePicture') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Profilbild</label>
+            <div class="d-flex">
+                <input class="form-control w-100" type="file" id="formFile" name="profile_picture">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    
+    </form>
+</div>

@@ -17,7 +17,7 @@ const shieldConfig = defineConfig({
    */
   csrf: {
     enabled: true,
-    exceptRoutes: ['/register', '/login', '/profile/add'],
+    exceptRoutes: ['/register', '/login', '/profile/add', '/profile/update/name', '/profile/update/password', '/profile/update/profile_picture'],
     enableXsrfCookie: false,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   },

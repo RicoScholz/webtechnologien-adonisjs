@@ -70,6 +70,21 @@ router
     .use(middleware.auth());
 
 router
+    .post('/profile/update/name', '#controllers/auth_controller.updateName')
+    .as('auth.update.name')
+    .use(middleware.auth());
+
+router
+    .post('/profile/update/password', '#controllers/auth_controller.updatePassword')
+    .as('auth.update.password')
+    .use(middleware.auth());
+
+router
+    .post('/profile/update/profile_picture', '#controllers/auth_controller.updateProfilePicture')
+    .as('auth.update.profilePicture')
+    .use(middleware.auth());
+
+router
     .get('/logout', async ({ response, auth }) => {
         await auth.use('web').logout();
         return response.redirect('/')
