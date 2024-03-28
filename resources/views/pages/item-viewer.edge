@@ -1,11 +1,84 @@
 @if(product.info.active)
-    <h4>{{ product.info.title }}</h4>
+<div class="container-sm my-5">
+    <div class="row">
+        <div id="carouselExampleIndicators" class="carousel slide col-5">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div>
+                    @each((imageName, index) in JSON.parse(product.info.item_images))
+                    <div class="carousel-item {{ index === 0 ? 'active' : '' }}">
+                        <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" class="d-block w-100"
+                            alt="{{ imageName }}">
+                    </div>
+                    @endeach
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
 
-    <div>
-        @each(imageName in JSON.parse(product.info.item_images))
-            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" class="img-fluid" alt="placeholder">
-        @endeach
+        <div class="px-5 py-4 col-4">
+            <h4>Beschreibung</h4>
+            <hr class="border border-1 opacity-100">
+            <span>{{ product.info.description }}</span>
+        </div>
+
+        <div class="px-5 py-3 col-3">
+            <li class="d-flex align-items-center">
+                <img src="/assets/profile_pictures/{{ product.owner.id }}/{{ product.owner.profile_picture }}"
+                    alt="avatar" width="35" class="border border-2 rounded-circle me-2">
+                <h4 class="m-0">{{ product.owner.full_name }}</h4>
+            </li>
+            <hr class="border border-1 opacity-100">
+            <div class="mb-3">Aktiv seit {{ product.owner.created_at.split(' ')[0] }}</div>
+            <a class="btn btn-primary w-100 mb-3" href="/register" role="button">Nachricht Senden</a>
+
+            <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Anzeige Teilen
+            </button>
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Teilen</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <a href="mailto:?subject=Kleinanzeigen:%20{{ product.info.title }}&amp;body=Gerade%20bei%20%23Kleinanzeigen%20gefunden.%20Wie%20findest%20du%20das%3F%0Ahttps%3A%2F%2F{{ request.host() }}{{ request.url() }}
+                            ">E-Mail senden</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="px-4 py-4">
+        <h2>{{ product.info.title }}</h2>
+        <div class="text-success text-lg fs-3">
+            {{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</div>
+        <div>erstellt am {{ product.info.created_at.split(' ')[0] }}</div>
+
+    </div>
+</div>
+
 @else
-    <h4>Diese Anzeige wurde Deaktiviert!</h4>
+<h4>Diese Anzeige wurde Deaktiviert!</h4>
 @endif

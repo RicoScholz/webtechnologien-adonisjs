@@ -1,9 +1,7 @@
-<div class="container my-5 d-flex flex-row flex-wrap justify-content-around">
-    @if(products.length > 0)
-        @each(product in products)
-            @!component('components/product-card', { product })
-        @endeach
+<div class="container-sm my-5 d-flex flex-row flex-wrap justify-content-around">
+    @each(product in products)
+        @!component('components/product-card', { product })
     @else
         <h4>Keine Anzeigen vorhanden</h4>
-    @endif
+    @endeach
 </div>
