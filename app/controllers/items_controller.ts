@@ -1,9 +1,10 @@
 import Item from '#models/item';
-import { addItemValidator } from '#validators/post';
+import { addItemValidator, itemImageValidator } from '#validators/post';
 import type { HttpContext } from '@adonisjs/core/http';
 import db from '@adonisjs/lucid/services/db';
 import { Product } from '../types/product.js';
 import User from '#models/user';
+import app from '@adonisjs/core/services/app';
 
 export default class ItemsController {
     public async allItemsShow({ view, auth }: HttpContext) {
@@ -51,11 +52,22 @@ export default class ItemsController {
     }
 
     public async addItem({ request, response, auth }: HttpContext) {
-        const data = await request.validateUsing(addItemValidator);
-        const user_id = await auth.user!.id;
-        const active = true
+        const validData = await request.validateUsing(addItemValidator);
+        const files = request.allFiles();
+        const validFiles = await itemImageValidator.validate(files);
 
-        Item.create({...data, user_id, active });
+        const imageLinks = validFiles.item_images.map(file => file.clientName);
+
+        const item = await Item.create({
+            ...validData,
+            item_images: JSON.stringify(imageLinks),
+            user_id: auth.user!.id,
+            active: true
+        });
+
+        for (const image of validFiles.item_images) {
+            image.move(app.makePath(`public/assets/items/${item.id}`));
+        }
 
         return response.redirect('/profile/items');
     }

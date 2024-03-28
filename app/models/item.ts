@@ -8,7 +8,8 @@ export default class Item extends BaseModel {
   @column()
   declare user_id: number
 
-  // images
+  @column()
+  declare item_images: string
 
   // chats
 

@@ -3,6 +3,7 @@ import { withAuthFinder } from '@adonisjs/auth'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { MultipartFile } from '@adonisjs/core/bodyparser'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -21,6 +22,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare password: string
+
+  @column()
+  declare profile_picture: string;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

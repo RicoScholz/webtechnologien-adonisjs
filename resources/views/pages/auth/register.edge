@@ -1,4 +1,4 @@
-<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('auth.register') }}" method="POST">
+<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('auth.register') }}" method="POST" enctype="multipart/form-data">
     <h4 class="text-center font-weight-bold">Account erstellen</h4>
 
     <div class="mb-3">
@@ -12,6 +12,10 @@
     <div class="mb-3">
         <label for="passwordInput" class="form-label">Passwort</label>
         <input type="password" class="form-control" id="passwordInput" name="password">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Profilbild</label>
+        <input class="form-control" type="file" id="formFile" name="profile_picture">
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Register</button>

@@ -1,12 +1,13 @@
 <div class="card" style="width: 18rem;">
-    <img src="/assets/placeholder.svg" class="card-img-top" alt="placeholder">
+    <img src="/assets/items/{{ product.info.id }}/{{ JSON.parse(product.info.item_images)[0] }}" class="card-img-top" alt="placeholder">
     <div class="card-body">
       <h5 class="card-title">{{ product.info.title }}</h5>
       <p class="card-text">{{ product.info.description }}</p>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        von {{ product.owner.full_name }}
+        <img src="{{ product.owner.profile_picture }}" alt="avatar" width="40" class="border border-2 rounded-circle me-2">
+        {{ product.owner.full_name }}
       </li>
       <li class="list-group-item">
         <p class="card-text">{{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</p>

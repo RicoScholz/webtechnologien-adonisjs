@@ -1,5 +1,11 @@
 @if(product.info.active)
     <h4>{{ product.info.title }}</h4>
+
+    <div>
+        @each(imageName in JSON.parse(product.info.item_images))
+            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" class="img-fluid" alt="placeholder">
+        @endeach
+    </div>
 @else
     <h4>Diese Anzeige wurde Deaktiviert!</h4>
 @endif

@@ -10,7 +10,16 @@ export const registerValidator = vine.compile(
         .first()
       return !user
     }),
-    password: vine.string().trim().minLength(8)
+    password: vine.string().trim().minLength(8),
+  })
+);
+
+export const avatarValidator = vine.compile(
+  vine.object({
+    profile_picture: vine.file({ 
+      size: '1mb',
+      extnames: ['jpg', 'png', 'jpeg']
+    })
   })
 );
 
@@ -19,5 +28,16 @@ export const addItemValidator = vine.compile(
     title: vine.string().trim(),
     description: vine.string().trim(),
     price: vine.number().positive()
+  })
+);
+
+export const itemImageValidator = vine.compile(
+  vine.object({
+    item_images: vine.array(
+      vine.file({ 
+        size: '5mb',
+        extnames: ['jpg', 'png', 'jpeg']
+      })
+    )
   })
 );
