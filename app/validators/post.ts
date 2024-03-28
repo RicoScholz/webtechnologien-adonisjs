@@ -38,6 +38,6 @@ export const itemImageValidator = vine.compile(
         size: '5mb',
         extnames: ['jpg', 'png', 'jpeg']
       })
-    )
+    ).minLength(1)
   })
 );

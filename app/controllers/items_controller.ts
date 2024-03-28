@@ -5,6 +5,7 @@ import db from '@adonisjs/lucid/services/db';
 import { Product } from '../types/product.js';
 import User from '#models/user';
 import app from '@adonisjs/core/services/app';
+import { MultipartFile } from '@adonisjs/core/bodyparser';
 
 export default class ItemsController {
     public async allItemsShow({ view, auth }: HttpContext) {
@@ -18,7 +19,7 @@ export default class ItemsController {
             const owner: User = await db.from('users').select('*').where('id', info.user_id).first();
             products.push({ info, owner, editable: false })
         }
-        
+
         return view.render('layouts/main', { page: 'pages/dashboard', products });
     }
 
@@ -28,16 +29,16 @@ export default class ItemsController {
         const info: Item = await db.from('items').select('*').where('id', params.id).first();
         const owner: User = await db.from('users').select('*').where('id', info.user_id).first();
 
-        const product: Product = { info, owner, editable: false};
-    
+        const product: Product = { info, owner, editable: false };
+
         return view.render('layouts/main', { page: 'pages/item-viewer', product });
     }
 
     public async ownItemsShow({ view, auth }: HttpContext) {
         await auth.check()
-        
+
         const products: Product[] = [];
-        
+
         const items: Item[] = await db.from('items').select('*').where('user_id', auth.user!.id);
 
         for (const info of items) {
@@ -53,7 +54,10 @@ export default class ItemsController {
 
     public async addItem({ request, response, auth }: HttpContext) {
         const validData = await request.validateUsing(addItemValidator);
-        const files = request.allFiles();
+
+        let files = request.allFiles();
+        if (!(files['item_images'] instanceof Array)) files['item_images'] = [files['item_images'] as MultipartFile];
+
         const validFiles = await itemImageValidator.validate(files);
 
         const imageLinks = validFiles.item_images.map(file => file.clientName);
