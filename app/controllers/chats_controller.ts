@@ -12,7 +12,7 @@ export default class ChatsController {
 
         const info: Item = await db.from('items').where('id', params.id).first();
         const owner: User = await db.from('users').where('id', info.user_id).first();
-        const product: Product = { info, owner, editable: false };
+        const product: Product = { info, owner };
 
         if (auth.user?.id == params.prospect && auth.user?.id == owner.id) return response.forbidden();
         if (auth.user?.id != params.prospect && auth.user?.id != owner.id) return response.unauthorized();

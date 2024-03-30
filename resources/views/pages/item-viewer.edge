@@ -1,5 +1,5 @@
 <div class="container-sm my-5">
-    @if(product.info.active)
+    @if(product.info.active || auth.user.id == product.owner.id)
     <div class="row">
         <div id="carouselExampleIndicators" class="carousel slide col-5 border p-0">
             <div class="carousel-indicators">
@@ -46,7 +46,15 @@
             </li>
             <hr class="border border-1 opacity-100">
             <div class="mb-3">Aktiv seit {{ product.owner.created_at.split(' ')[0] }}</div>
+            @if(auth.user?.id == product.owner.id)
+                @if(product.info.active)
+                <a href="/item/{{ product.info.id }}/deactivate" type="button" class="btn btn-danger w-100 mb-3">Deaktivieren</a>
+                @else
+                <a href="/item/{{ product.info.id }}/activate" type="button" class="btn btn-success w-100 mb-3">Aktivieren</a>
+                @endif
+            @else
             <a class="btn btn-primary w-100 mb-3" href="/item/{{ product.info.id }}/chat/{{ auth.user?.id }}" role="button">Nachricht Senden</a>
+            @endif
 
             <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Anzeige Teilen

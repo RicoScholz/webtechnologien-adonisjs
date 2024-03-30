@@ -10,14 +10,13 @@ import { MultipartFile } from '@adonisjs/core/bodyparser';
 export default class ItemsController {
     public async allItemsShow({ view, auth }: HttpContext) {
         await auth.check();
-
-        const products: Product[] = [];
-
+        
         const items: Item[] = await db.from('items').where('active', true);
-
+        
+        const products: Product[] = [];
         for (const info of items) {
             const owner: User = await db.from('users').where('id', info.user_id).first();
-            products.push({ info, owner, editable: false })
+            products.push({ info, owner })
         }
 
         return view.render('layouts/main', { page: 'pages/dashboard', products });
@@ -29,7 +28,7 @@ export default class ItemsController {
         const info: Item = await db.from('items').where('id', params.id).first();
         const owner: User = await db.from('users').where('id', info.user_id).first();
 
-        const product: Product = { info, owner, editable: false };
+        const product: Product = { info, owner };
 
         return view.render('layouts/main', { page: 'pages/item-viewer', product });
     }
@@ -42,7 +41,7 @@ export default class ItemsController {
         const items: Item[] = await db.from('items').where('user_id', auth.user!.id);
 
         for (const info of items) {
-            products.push({ info, owner: auth.user!, editable: true })
+            products.push({ info, owner: auth.user! })
         }
 
         return view.render('layouts/main', { page: 'pages/dashboard', products });
@@ -88,7 +87,7 @@ export default class ItemsController {
         if (auth.user!.id === owner.id) {
             item.active = false;
             await item.save();
-            return response.redirect('/profile/items');
+            return response.redirect().back();
         }
 
         return response.forbidden();
@@ -106,7 +105,7 @@ export default class ItemsController {
         if (auth.user!.id === owner.id) {
             item.active = true;
             await item.save();
-            return response.redirect('/profile/items');
+            return response.redirect().back();
         }
 
         return response.forbidden();

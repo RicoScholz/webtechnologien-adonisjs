@@ -7,13 +7,5 @@
   <div class="card-body">
     <h5 class="card-title m-0">{{ product.info.title }}</h5>
     <a href="/item/{{ product.info.id }}" class="stretched-link"></a>
-
-    @if(product.editable)
-    @if(product.info.active)
-    <a href="/item/{{ product.info.id }}/deactivate" type="button" class="stretched-link position-relative btn btn-danger">Deaktivieren</a>
-    @else
-    <a href="/item/{{ product.info.id }}/activate" type="button" class="stretched-link position-relative btn btn-success">Aktivieren</a>
-    @endif
-    @endif
   </div>
 </div>
