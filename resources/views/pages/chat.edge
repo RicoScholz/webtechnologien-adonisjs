@@ -1,0 +1,39 @@
+<section class="container-sm p-0 my-3 border rounded d-flex flex-column" id="chat">
+    <header class="w-100 d-flex align-items-center justify-content-center p-3">
+        <div class="d-flex align-items-center">
+            @assign(imageName = JSON.parse(product.info.item_images)[0])
+            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" alt="{{ imageName }}" width="60" class="border border-2 rounded-circle me-2">
+            <div>
+                <h5 class="m-0">{{ product.info.title }}</h5>
+                <span>{{ product.owner.full_name }}</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="overflow-y-scroll p-2 border h-100">
+        <div class="d-flex justify-content-end mb-4">
+            <div class="border p-2 rounded ms-5">
+              Hallo, wie kann ich Ihnen helfen? Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus molestiae repudiandae rem aut delectus, perspiciatis ullam illum sint impedit asperiores ipsa incidunt! Aut tenetur neque ad rerum mollitia voluptatem.
+              <div class="fw-light small">10:30 AM, Today</div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-start mb-4">
+            <div class="border p-2 rounded me-5">
+              Guten Tag! Ich habe eine Frage zu meiner Versicherung. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, alias iure blanditiis, animi placeat, mollitia aperiam eligendi quisquam quaerat quae dolorum aspernatur beatae accusantium labore asperiores recusandae aliquam sapiente consequatur.
+              <div class="fw-light small">10:31 AM, Today</div>
+            </div>
+        </div>
+    </div>
+
+    <form action="" method="POST">
+        <div>
+            <label for="formMessage" class="form-label d-none">Nachricht</label>
+            <div class="d-flex">
+                <input class="form-control w-100 p-2" type="text" id="formMessage" name="message" placeholder="Nachricht...">
+                <button type="submit" class="btn btn-primary">Senden</button>
+            </div>
+        </div>
+    </form>
+</section>
+

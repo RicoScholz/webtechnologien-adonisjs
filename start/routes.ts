@@ -22,6 +22,10 @@ router
     .get('/item/:id/activate', '#controllers/items_controller.activateItem')
     .use(middleware.auth());
 
+router
+    .get('/item/:id/chat','#controllers/chats_controller.chatShow')
+    .use(middleware.auth());
+
 // auth
 
 router
