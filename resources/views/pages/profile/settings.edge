@@ -2,6 +2,7 @@
     <h4 class="text-center font-weight-bold">Profil von {{ auth.user.full_name }} bearbeiten</h4>
 
     <form class="my-5" action="{{ route('auth.update.name') }}" method="POST" enctype="multipart/form-data">
+        {{ csrfField() }}
         <div class="mb-3">
             <label for="fullNameInput" class="form-label">Name</label>
             <div class="d-flex">
@@ -12,6 +13,7 @@
     </form>
 
     <form class="mb-5" action="{{ route('auth.update.password') }}" method="POST" enctype="multipart/form-data">
+        {{ csrfField() }}
         <div class="mb-3">
             <label for="passwordInput" class="form-label">Passwort</label>
             <div class="d-flex">
@@ -22,6 +24,7 @@
     </form>
 
     <form action="{{ route('auth.update.profilePicture') }}" method="POST" enctype="multipart/form-data">
+        {{ csrfField() }}
         <div class="mb-3">
             <label for="formFile" class="form-label">Profilbild</label>
             <div class="d-flex">

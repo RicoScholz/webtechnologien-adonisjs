@@ -11,8 +11,6 @@ export default class Item extends BaseModel {
   @column()
   declare item_images: string
 
-  // chats
-
   @column()
   declare title: string
 

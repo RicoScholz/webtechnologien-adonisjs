@@ -48,3 +48,9 @@ export const itemImageValidator = vine.compile(
     ).minLength(1)
   })
 );
+
+export const messageValidator = vine.compile(
+  vine.object({
+    message: vine.string().trim().minLength(1).maxLength(500)
+  })
+);

@@ -23,7 +23,12 @@ router
     .use(middleware.auth());
 
 router
-    .get('/item/:id/chat','#controllers/chats_controller.chatShow')
+    .get('/item/:id/chat/:prospect', '#controllers/chats_controller.chatShow')
+    .use(middleware.auth());
+
+router
+    .post('/item/:id/chat/:prospect', '#controllers/chats_controller.sendMessage')
+    .as('chat.send')
     .use(middleware.auth());
 
 // auth

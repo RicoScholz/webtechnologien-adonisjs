@@ -46,7 +46,7 @@
             </li>
             <hr class="border border-1 opacity-100">
             <div class="mb-3">Aktiv seit {{ product.owner.created_at.split(' ')[0] }}</div>
-            <a class="btn btn-primary w-100 mb-3" href="/item/{{ product.info.id }}/chat" role="button">Nachricht Senden</a>
+            <a class="btn btn-primary w-100 mb-3" href="/item/{{ product.info.id }}/chat/{{ auth.user?.id }}" role="button">Nachricht Senden</a>
 
             <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Anzeige Teilen

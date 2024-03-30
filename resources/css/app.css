@@ -9,8 +9,8 @@ body {
   width: 100%;
 }
 
-#chat {
-  max-width: 700px;
+#chat-section {
+  max-width: 600px;
   max-height: 80vh;
   height: 80vh;
 } 

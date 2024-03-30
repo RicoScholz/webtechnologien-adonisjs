@@ -1,4 +1,5 @@
 <form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('items.add') }}" method="POST" enctype="multipart/form-data">
+    {{ csrfField() }}
     <h4 class="text-center font-weight-bold">Anzeige aufgeben</h4>
 
     <div class="mb-3">

@@ -8,7 +8,6 @@ export default class extends BaseSchema {
       table.increments('id').notNullable()
       table.integer('user_id').references('id').inTable('users').notNullable()
       table.string('item_images').notNullable()
-      // chats
       table.string('title').notNullable()
       table.string('description').notNullable()
       table.double('price').notNullable()

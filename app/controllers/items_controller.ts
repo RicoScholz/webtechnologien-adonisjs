@@ -13,10 +13,10 @@ export default class ItemsController {
 
         const products: Product[] = [];
 
-        const items: Item[] = await db.from('items').select('*').where('active', true);
+        const items: Item[] = await db.from('items').where('active', true);
 
         for (const info of items) {
-            const owner: User = await db.from('users').select('*').where('id', info.user_id).first();
+            const owner: User = await db.from('users').where('id', info.user_id).first();
             products.push({ info, owner, editable: false })
         }
 
@@ -26,8 +26,8 @@ export default class ItemsController {
     public async singleItemShow({ view, auth, params }: HttpContext) {
         await auth.check();
 
-        const info: Item = await db.from('items').select('*').where('id', params.id).first();
-        const owner: User = await db.from('users').select('*').where('id', info.user_id).first();
+        const info: Item = await db.from('items').where('id', params.id).first();
+        const owner: User = await db.from('users').where('id', info.user_id).first();
 
         const product: Product = { info, owner, editable: false };
 
@@ -39,7 +39,7 @@ export default class ItemsController {
 
         const products: Product[] = [];
 
-        const items: Item[] = await db.from('items').select('*').where('user_id', auth.user!.id);
+        const items: Item[] = await db.from('items').where('user_id', auth.user!.id);
 
         for (const info of items) {
             products.push({ info, owner: auth.user!, editable: true })
