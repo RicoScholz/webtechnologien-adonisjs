@@ -67,9 +67,7 @@ router
     .use(middleware.auth());
 
 router
-    .get('/profile/chats', async ({ view }) => {
-        return view.render('layouts/main', { page: 'pages/profile/chats-overview' });
-    })
+    .get('/profile/chats', '#controllers/chats_controller.chatOverviewShow')
     .use(middleware.auth());
 
 router

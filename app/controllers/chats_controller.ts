@@ -57,4 +57,59 @@ export default class ChatsController {
 
         return response.redirect().back();
     }
+
+    public async chatOverviewShow({ view, auth }: HttpContext) {
+        await auth.check();
+
+        let inquiries = [];
+        let requests: Product[] = [];
+
+        const ownMessages: Message[] = await db
+            .from('messages')
+            .where('sender_id', auth.user!.id)
+            .orWhere('receiver_id', auth.user!.id)
+
+        for (const msg of ownMessages) {
+            const info: Item = await db
+                .from('items')
+                .where('id', msg.item_id)
+                .first();
+
+            const owner: User = await db
+                .from('users')
+                .where('id', info.user_id)
+                .first();
+
+            const prospect: User = await db
+                .from('users')
+                .where('id', auth.user!.id == msg.sender_id ? msg.receiver_id : msg.sender_id)
+                .first();
+
+            if (owner.id == auth.user!.id) {
+                inquiries.push({ 
+                    info,
+                    prospect
+                });
+            } else {
+                requests.push({
+                    info,
+                    owner
+                });
+            }
+        }
+
+        inquiries = inquiries.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.prospect.id === value.prospect.id
+            ))
+        )
+
+        requests = requests.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.info.id === value.info.id
+            ))
+        )
+
+        return view.render('layouts/main', { page: 'pages/profile/chats-overview', inquiries, requests });
+    }
 }

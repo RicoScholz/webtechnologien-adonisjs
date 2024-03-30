@@ -1,1 +1,30 @@
-<h1>chats</h1>
+<div class="container-sm mt-5">
+    <h4>Kaufinteressenten</h4>
+    <div class="mb-5">
+        @each(inquiry in inquiries)
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">{{ inquiry.info.title }}</div>
+            <div class="card-body position-relative">
+              <a href="/item/{{ inquiry.info.id }}/chat/{{ inquiry.prospect.id }}" class="card-link fs-5 stretched-link">{{ inquiry.prospect.full_name }}</a>
+            </div>
+        </div>
+        @else
+        <div>Keine Chats vorhanden</div>
+        @endeach
+    </div>
+
+    <h4>eigene Anfragen</h4>
+    <div>
+        @each(product in requests)
+        <div class="card mb-3">
+            <div class="card-header bg-transparent">{{ product.owner.full_name }}</div>
+            <div class="card-body position-relative">
+              <a href="/item/{{ product.info.id }}/chat/{{ auth.user.id }}" class="card-link fs-5 stretched-link">{{ product.info.title }}</a>
+            </div>
+        </div>
+        @else
+        <div>Keine Chats vorhanden</div>
+        @endeach
+    </div>
+
+</div>
