@@ -1,7 +1,1 @@
-<div class="container-sm my-5 d-flex flex-row flex-wrap justify-content-around">
-    @each(product in products)
-        @!component('components/product-card', { product })
-    @else
-        <h4>Keine Anzeigen vorhanden</h4>
-    @endeach
-</div>
+@!component('components/item-container', { heading: 'Neuste Anzeigen' , products })

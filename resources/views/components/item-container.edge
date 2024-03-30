@@ -1,0 +1,22 @@
+<div class="container-sm mt-5">
+  <h4>{{ heading }}</h4>
+  <div class="container-sm p-0 d-flex flex-row flex-wrap">
+    @each(product in products)
+    <div class="card m-2" style="width: 18rem;">
+      <div class="position-relative">
+        <img src="/assets/items/{{ product.info.id }}/{{ JSON.parse(product.info.item_images)[0] }}"
+          class="card-img-top" alt="placeholder">
+        <span
+          class="position-absolute bottom-0 end-0 mb-2 bg-warning p-1 ps-2 rounded-start-4">{{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</span>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ product.info.title }}</h5>
+        <div>{{ product.owner.full_name }}</div>
+        <a href="/item/{{ product.info.id }}" class="stretched-link"></a>
+      </div>
+    </div>
+    @else
+    <div>Keine Anzeigen vorhanden!</div>
+    @endeach
+  </div>
+</div>

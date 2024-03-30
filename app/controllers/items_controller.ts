@@ -36,15 +36,19 @@ export default class ItemsController {
     public async ownItemsShow({ view, auth }: HttpContext) {
         await auth.check()
 
-        const products: Product[] = [];
-
-        const items: Item[] = await db.from('items').where('user_id', auth.user!.id);
-
-        for (const info of items) {
-            products.push({ info, owner: auth.user! })
+        
+        const aktiveProducts: Product[] = [];
+        const activeItems: Item[] = await db.from('items').where('user_id', auth.user!.id).andWhere('active', true);
+        for (const info of activeItems) {
+            aktiveProducts.push({ info, owner: auth.user! })
         }
-
-        return view.render('layouts/main', { page: 'pages/dashboard', products });
+        
+        const inaktiveProducts: Product[] = [];
+        const inaktiveItems: Item[] = await db.from('items').where('user_id', auth.user!.id).andWhere('active', false);
+        for (const info of inaktiveItems) {
+            inaktiveProducts.push({ info, owner: auth.user! })
+        }
+        return view.render('layouts/main', { page: 'pages/profile/my-items', aktiveProducts, inaktiveProducts });
     }
 
     public async addItemShow({ view }: HttpContext) {
