@@ -1,7 +1,7 @@
-@if(product.info.active)
 <div class="container-sm my-5">
+    @if(product.info.active)
     <div class="row">
-        <div id="carouselExampleIndicators" class="carousel slide col-5">
+        <div id="carouselExampleIndicators" class="carousel slide col-5 border p-0">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1"></button>
@@ -75,10 +75,10 @@
         <div class="text-success text-lg fs-3">
             {{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</div>
         <div>erstellt am {{ product.info.created_at.split(' ')[0] }}</div>
-
     </div>
+
+    @else
+    <h4 class="text-center">Diese Anzeige wurde Deaktiviert!</h4>
+    @endif
 </div>
 
-@else
-<h4>Diese Anzeige wurde Deaktiviert!</h4>
-@endif
