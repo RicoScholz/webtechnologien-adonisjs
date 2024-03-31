@@ -45,7 +45,7 @@ export default class ChatsController {
         const item: Item = await db.from('items').where('id', params.id).first();
         const owner: User = await db.from('users').where('id', item.user_id).first();
 
-        if (auth.user?.id == owner.id) return response.forbidden();
+        if (auth.user?.id == params.prospect && auth.user?.id == owner.id) return response.forbidden();
         if (auth.user?.id != params.prospect && auth.user?.id != owner.id) return response.unauthorized();
 
         Message.create({
