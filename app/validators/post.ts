@@ -3,7 +3,7 @@ import vine from '@vinejs/vine';
 const profilePicture = {
   profile_picture: vine.file({
     size: '1mb',
-    extnames: ['jpg', 'png', 'jpeg']
+    extnames: ['jpg', 'png', 'jpeg', 'webp']
   })
 };
 
@@ -43,7 +43,7 @@ export const itemImageValidator = vine.compile(
     item_images: vine.array(
       vine.file({
         size: '5mb',
-        extnames: ['jpg', 'png', 'jpeg']
+        extnames: ['jpg', 'png', 'jpeg', 'webp']
       })
     ).minLength(1)
   })
