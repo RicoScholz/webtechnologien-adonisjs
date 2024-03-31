@@ -61,55 +61,49 @@ export default class ChatsController {
     public async chatOverviewShow({ view, auth }: HttpContext) {
         await auth.check();
 
-        let inquiries = [];
-        let requests: Product[] = [];
-
-        const ownMessages: Message[] = await db
+        const prospects = await db
             .from('messages')
-            .where('sender_id', auth.user!.id)
-            .orWhere('receiver_id', auth.user!.id)
+            .distinct('items.id as item_id')
+            .select('items.title', 'users.id as user_id', 'users.full_name')
+            .leftJoin('items', 'messages.item_id', 'items.id')
+            .leftJoin('users', query => {
+            query.on('messages.sender_id', '=', 'users.id')
+                .orOn('messages.receiver_id', '=', 'users.id')
+            })
+            .where('items.user_id', auth.user!.id)
+            .andWhereNot('users.id', auth.user!.id)
+            .andWhere(query => {
+                query.where('messages.sender_id', auth.user!.id)
+                .orWhere('messages.receiver_id', auth.user!.id)
+            })
+            .then(async (rows) => {
+                return rows.reduce((acc, row) => {
+                  const existingItem = acc.find((item: any) => item.item_id === row.item_id);
+                  if (existingItem) {
+                    existingItem.users.push({ user_id: row.user_id, full_name: row.full_name });
+                  } else {
+                    acc.push({ item_id: row.item_id, title: row.title, users: [{ user_id: row.user_id, full_name: row.full_name }] });
+                  }
+                  return acc;
+                }, []);
+            });
 
-        for (const msg of ownMessages) {
-            const info: Item = await db
-                .from('items')
-                .where('id', msg.item_id)
-                .first();
+        const requests = await db
+            .from('messages')
+            .distinct('items.id as item_id')
+            .select('items.title', 'users.id as user_id', 'users.full_name')
+            .leftJoin('items', 'messages.item_id', 'items.id')
+            .leftJoin('users', query => {
+            query.on('messages.sender_id', '=', 'users.id')
+                .orOn('messages.receiver_id', '=', 'users.id')
+            })
+            .whereNot('items.user_id', auth.user!.id)
+            .andWhereNot('users.id', auth.user!.id)
+            .andWhere(query => {
+                query.where('messages.sender_id', auth.user!.id)
+                .orWhere('messages.receiver_id', auth.user!.id)
+            })
 
-            const owner: User = await db
-                .from('users')
-                .where('id', info.user_id)
-                .first();
-
-            const prospect: User = await db
-                .from('users')
-                .where('id', auth.user!.id == msg.sender_id ? msg.receiver_id : msg.sender_id)
-                .first();
-
-            if (owner.id == auth.user!.id) {
-                inquiries.push({ 
-                    info,
-                    prospect
-                });
-            } else {
-                requests.push({
-                    info,
-                    owner
-                });
-            }
-        }
-
-        inquiries = inquiries.filter((value, index, self) =>
-            index === self.findIndex((t) => (
-                t.prospect.id === value.prospect.id
-            ))
-        )
-
-        requests = requests.filter((value, index, self) =>
-            index === self.findIndex((t) => (
-                t.info.id === value.info.id
-            ))
-        )
-
-        return view.render('layouts/main', { page: 'pages/profile/chats-overview', inquiries, requests });
+        return view.render('layouts/main', { page: 'pages/profile/chats-overview', prospects, requests });
     }
 }

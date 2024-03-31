@@ -2,10 +2,10 @@
     <header class="w-100 d-flex align-items-center justify-content-center p-3">
         <div class="d-flex align-items-center">
             @assign(imageName = JSON.parse(product.info.item_images)[0])
-            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" alt="{{ imageName }}" width="60" class="border border-2 rounded-circle me-2">
+            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" alt="{{ imageName }}" width="45" class="border border-2 rounded-circle me-2">
             <div>
                 <h5 class="m-0">{{ product.info.title }}</h5>
-                <span>{{ product.owner.full_name }}</span>
+                <span class="small">{{ product.owner.full_name }}</span>
             </div>
         </div>
     </header>
@@ -20,13 +20,19 @@
                     </div>
                 </div>
             @else
-                <div class="d-flex justify-content-start mb-4">
+                <div class="d-flex justify-content-start mt-4">
                     <div class="border p-2 rounded me-5 text-break">
                         {{ msg.content }}
                     <div class="fw-light small">{{ msg.created_at }}</div>
                     </div>
                 </div>
             @endif
+        @else
+        <div class="d-flex justify-content-center mt-2">
+            <div class="p-2 rounded text-break bg-warning-subtle">
+                Beginne einen neuen Chat mit {{ product.owner.full_name }}
+            </div>
+        </div>
         @endeach
     </div>
 
