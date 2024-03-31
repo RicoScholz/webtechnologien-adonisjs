@@ -12,6 +12,7 @@ export default class ChatsController {
 
         const info: Item = await db.from('items').where('id', params.id).first();
         const owner: User = await db.from('users').where('id', info.user_id).first();
+        const prospect: User = await db.from('users').where('id', params.prospect).first();
         const product: Product = { info, owner };
 
         if (auth.user?.id == params.prospect && auth.user?.id == owner.id) return response.forbidden();
@@ -34,7 +35,7 @@ export default class ChatsController {
                     })
             });
 
-        return view.render('layouts/main', { page: 'pages/chat', product, messages });
+        return view.render('layouts/main', { page: 'pages/chat', product, prospect, messages });
     }
 
     public async sendMessage({ request, response, auth, params }: HttpContext) {

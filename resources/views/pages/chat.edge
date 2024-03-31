@@ -1,13 +1,23 @@
 <section class="container-sm p-0 my-3 border rounded d-flex flex-column" id="chat-section">
     <header class="w-100 d-flex align-items-center justify-content-center p-3">
+        @if(product.owner.id == auth.user.id)
+        <div class="d-flex align-items-center">
+            <img src="/assets/profile_pictures/{{ prospect.id }}/{{ prospect.profile_picture }}" alt="avatar" width="45" class="border border-2 rounded-circle me-2">
+            <div>
+                <h5 class="m-0">{{ prospect.full_name }}</h5>
+                <span class="small">Kaufinteressent</span>
+            </div>
+        </div>
+        @else
         <div class="d-flex align-items-center">
             @assign(imageName = JSON.parse(product.info.item_images)[0])
             <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" alt="{{ imageName }}" width="45" class="border border-2 rounded-circle me-2">
             <div>
                 <h5 class="m-0">{{ product.info.title }}</h5>
-                <span class="small">{{ product.owner.full_name }}</span>
+                <span class="small">Verkäufer: {{ product.owner.full_name }}</span>
             </div>
         </div>
+        @endif
     </header>
 
     <div class="overflow-y-scroll p-2 border h-100" id="chat-messages">
