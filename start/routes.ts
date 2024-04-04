@@ -9,65 +9,68 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js';
+import ItemsController from '#controllers/items_controller';
+import ChatsController from '#controllers/chats_controller';
+import AuthController from '#controllers/auth_controller';
 
-router.get('/', '#controllers/items_controller.allItemsShow');
+router.get('/', [ItemsController, 'allItemsShow']);
 
-router.get('/item/:id', '#controllers/items_controller.singleItemShow');
+router.get('/item/:id', [ItemsController, 'singleItemShow']);
 
 router
-    .get('/item/:id/deactivate', '#controllers/items_controller.deactivateItem')
+    .get('/item/:id/deactivate', [ItemsController, 'deactivateItem'])
     .use(middleware.auth());
 
 router
-    .get('/item/:id/activate', '#controllers/items_controller.activateItem')
+    .get('/item/:id/activate', [ItemsController, 'activateItem'])
     .use(middleware.auth());
 
 router
-    .get('/item/:id/chat/:prospect', '#controllers/chats_controller.chatShow')
+    .get('/item/:id/chat/:prospect', [ChatsController, 'chatShow'])
     .use(middleware.auth());
 
 router
-    .post('/item/:id/chat/:prospect', '#controllers/chats_controller.sendMessage')
+    .post('/item/:id/chat/:prospect', [ChatsController, 'sendMessage'])
     .as('chat.send')
     .use(middleware.auth());
 
 // auth
 
 router
-    .get('/register', '#controllers/auth_controller.registerShow')
+    .get('/register', [AuthController, 'registerShow'])
     .use(middleware.guest());
 
 router
-    .post('/register', '#controllers/auth_controller.register')
+    .post('/register', [AuthController, 'register'])
     .as('auth.register')
     .use(middleware.guest());
 
 router
-    .get('/login', '#controllers/auth_controller.loginShow')
+    .get('/login', [AuthController, 'loginShow'])
     .use(middleware.guest());
 
 router
-    .post('/login', '#controllers/auth_controller.login')
+    .post('/login', [AuthController, 'login'])
     .as('auth.login')
     .use(middleware.guest());
 
 // profile
 
 router
-    .get('/profile/add', '#controllers/items_controller.addItemShow')
+    .get('/profile/add', [ItemsController, 'addItemShow'])
     .use(middleware.auth());
 
 router
-    .post('/profile/add', '#controllers/items_controller.addItem')
+    .post('/profile/add', [ItemsController, 'addItem'])
     .as('items.add')
     .use(middleware.auth());
 
 router
-    .get('/profile/items', '#controllers/items_controller.ownItemsShow')
+    .get('/profile/items', [ItemsController, 'ownItemsShow'])
     .use(middleware.auth());
 
 router
-    .get('/profile/chats', '#controllers/chats_controller.chatOverviewShow')
+    .get('/profile/chats', [ChatsController, 'chatOverviewShow'])
     .use(middleware.auth());
 
 router
@@ -77,17 +80,17 @@ router
     .use(middleware.auth());
 
 router
-    .post('/profile/update/name', '#controllers/auth_controller.updateName')
+    .post('/profile/update/name', [AuthController, 'updateName'])
     .as('auth.update.name')
     .use(middleware.auth());
 
 router
-    .post('/profile/update/password', '#controllers/auth_controller.updatePassword')
+    .post('/profile/update/password', [AuthController, 'updatePassword'])
     .as('auth.update.password')
     .use(middleware.auth());
 
 router
-    .post('/profile/update/profile_picture', '#controllers/auth_controller.updateProfilePicture')
+    .post('/profile/update/profile_picture', [AuthController, 'updateProfilePicture'])
     .as('auth.update.profilePicture')
     .use(middleware.auth());
 
