@@ -1,15 +1,21 @@
-<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('auth.login') }}" method="POST">
+<form class="container-sm my-5 p-5 shadow rounded-3 needs-validation" action="{{ route('auth.login') }}" method="POST" novalidate>
     {{ csrfField() }}
-    <h4 class="text-center font-weight-bold">Willkommen zurück!</h4>
+    <h4 class="text-center font-weight-bold mb-5">Willkommen zurück!</h4>   
 
-    <div class="mb-3">
+    <div class="form-floating mb-5">
+        <input type="email" class="form-control" id="emailInput" name="email" placeholder="" required>
         <label for="emailInput" class="form-label">E-Mail</label>
-        <input type="email" class="form-control" id="emailInput" name="email">
+        <div class="invalid-feedback position-absolute">
+            Bitte geben Sie Ihre E-Mail-Addresse ein!
+        </div>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-5">
+        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="" required>
         <label for="passwordInput" class="form-label">Passwort</label>
-        <input type="password" class="form-control" id="passwordInput" name="password">
+        <div class="invalid-feedback position-absolute">
+            Bitte geben Sie Ihr passwort ein!
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Anmelden</button>
+    <button type="submit" class="btn btn-primary ">Anmelden</button>
 </form>

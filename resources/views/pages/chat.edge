@@ -1,4 +1,4 @@
-<section class="container-sm p-0 my-3 border rounded d-flex flex-column" id="chat-section">
+<section class="container-sm p-0 my-3 rounded-3 shadow d-flex flex-column" id="chat-section">
     <header class="w-100 d-flex align-items-center justify-content-center p-3">
         @if(product.owner.id == auth.user.id)
         <div class="d-flex align-items-center">
@@ -20,7 +20,9 @@
         @endif
     </header>
 
-    <div class="overflow-y-scroll p-2 border h-100" id="chat-messages">
+    <hr>
+
+    <div class="overflow-y-scroll p-2 h-100" id="chat-messages">
         @each(msg in messages)
             @if(msg.sender_id === auth.user.id)
                 <div class="d-flex justify-content-end mb-4">
@@ -50,8 +52,8 @@
         {{ csrfField() }}
         <div>
             <label for="formMessage" class="form-label d-none">Nachricht</label>
-            <div class="d-flex">
-                <input class="form-control w-100 p-2" type="text" id="formMessage" name="message" placeholder="Nachricht..." maxlength="500" minlength="1">
+            <div class="input-group">
+                <input class="form-control p-2" type="text" id="formMessage" name="message" placeholder="Nachricht" maxlength="500" minlength="1" autocomplete="off" autofocus>
                 <button type="submit" class="btn btn-primary">Senden</button>
             </div>
         </div>

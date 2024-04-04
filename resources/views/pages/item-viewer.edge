@@ -45,7 +45,7 @@
                 <h4 class="m-0">{{ product.owner.full_name }}</h4>
             </li>
             <hr class="border border-1 opacity-100">
-            <div class="mb-3">Aktiv seit {{ product.owner.created_at.split(' ')[0] }}</div>
+            <div class="mb-3">Aktiv seit {{ new Date(product.owner.created_at).toLocaleDateString('de-DE') }}</div>
             @if(auth.user?.id == product.owner.id)
                 @if(product.info.active)
                 <a href="/item/{{ product.info.id }}/deactivate" type="button" class="btn btn-danger w-100 mb-3">Deaktivieren</a>
@@ -82,7 +82,7 @@
         <h2>{{ product.info.title }}</h2>
         <div class="text-success text-lg fs-3">
             {{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</div>
-        <div>erstellt am {{ product.info.created_at.split(' ')[0] }}</div>
+        <div>erstellt am {{ new Date(product.owner.created_at).toLocaleDateString('de-DE')  }}</div>
     </div>
 
     @else

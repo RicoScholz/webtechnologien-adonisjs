@@ -13,4 +13,9 @@ body {
   max-width: 600px;
   max-height: 80vh;
   height: 80vh;
-} 
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.04);
+  transition: transform 0.4s ease-out;
+}

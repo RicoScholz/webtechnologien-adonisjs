@@ -1,24 +1,36 @@
-<form class="container-sm my-5 p-5 border border-1 rounded" action="{{ route('items.add') }}" method="POST" enctype="multipart/form-data">
+<form class="container-sm my-5 p-5 shadow rounded-3 needs-validation" action="{{ route('items.add') }}" method="POST" enctype="multipart/form-data" novalidate>
     {{ csrfField() }}
-    <h4 class="text-center font-weight-bold">Anzeige aufgeben</h4>
+    <h4 class="text-center font-weight-bold mb-5">Anzeige aufgeben</h4>
 
-    <div class="mb-3">
+    <div class="form-floating mb-5">
+        <input type="text" class="form-control" id="titleInput" name="title" placeholder="" required>
         <label for="titleInput" class="form-label">Titel</label>
-        <input type="text" class="form-control" id="titleInput" name="title">
+        <div class="invalid-feedback position-absolute">
+            Bitte geben Sie einen Titel ein!
+        </div>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-5">
+        <textarea class="form-control" id="descriptionInput" name="description" placeholder="" required></textarea>
         <label for="descriptionInput" class="form-label">Beschreibung</label>
-        <textarea class="form-control" id="descriptionInput" name="description"></textarea>
+        <div class="invalid-feedback position-absolute">
+            Bitte geben Sie eine passende Beschreibung ein!
+        </div>
     </div>
-    <div class="mb-3">
+    <div class="form-floating mb-5">
+        <input type="number" class="form-control" id="priceInput" name="price" min="0.01" placeholder="" required>
         <label for="priceInput" class="form-label">Preis</label>
-        <input type="number" class="form-control" id="priceInput" name="price" step="0.01" min="0.01" placeholder="00,00€">
+        <div class="invalid-feedback position-absolute">
+            Bitte wählen sie einen Preis!
+        </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-5">
         <label for="formFile" class="form-label">Anzeigebilder</label>
-        <input class="form-control" type="file" id="formFile" name="item_images" multiple>
+        <input class="form-control" type="file" id="formFile" name="item_images" multiple required>
+        <div class="invalid-feedback position-absolute">
+            Bitte wählen Sie mindestens ein Anzeigebild!
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Erstellen</button>
+    <button type="submit" class="btn btn-primary ">Erstellen</button>
 </form>

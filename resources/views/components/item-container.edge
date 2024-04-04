@@ -2,7 +2,7 @@
   <h4>{{ heading }}</h4>
   <div class="container-sm p-0 d-flex flex-row flex-wrap">
     @each(product in products)
-    <div class="card m-2" style="width: 18rem;">
+    <div class="card m-2 overflow-hidden border-0 shadow-sm" style="width: 18rem;">
       <div class="position-relative">
         <img src="/assets/items/{{ product.info.id }}/{{ JSON.parse(product.info.item_images)[0] }}"
           class="card-img-top" alt="placeholder">

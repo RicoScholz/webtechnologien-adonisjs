@@ -3,7 +3,7 @@
     <div class="mb-5">
         @each(chat in prospects)
         <div class="card mb-3">
-            <div class="card-header bg-transparent">{{ chat.title }}</div>
+            <div class="card-header">{{ chat.title }}</div>
             @each(user in chat.users)
             <div class="card-body position-relative">
                 <a href="/item/{{ chat.item_id }}/chat/{{ user.user_id }}" class="card-link fs-5 stretched-link">{{ user.full_name }}</a>
@@ -19,7 +19,7 @@
     <div>
         @each(chat in requests)
         <div class="card mb-3">
-            <div class="card-header bg-transparent">{{ chat.full_name }}</div>
+            <div class="card-header">{{ chat.full_name }}</div>
             <div class="card-body position-relative">
               <a href="/item/{{ chat.item_id }}/chat/{{ auth.user.id }}" class="card-link fs-5 stretched-link">{{ chat.title }}</a>
             </div>
