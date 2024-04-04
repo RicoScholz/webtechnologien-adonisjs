@@ -2,7 +2,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { avatarValidator, registerValidator, updateNameValidator, updatePasswordValidator, updateProfilePictureValidator } from '#validators/post'
 import User from '#models/user';
 import app from '@adonisjs/core/services/app';
-import { request } from 'http';
 
 export default class AuthController {
     public async registerShow({ view }: HttpContext) {
@@ -74,12 +73,17 @@ export default class AuthController {
         if (!user) return response.abort({ err: 'user does not exist' });
 
         const file = request.allFiles();
-        const validFiles = await avatarValidator.validate(file);
+        const validFiles = await updateProfilePictureValidator.validate(file);
 
         user.profile_picture = validFiles.profile_picture.clientName;
         user.save();
         await validFiles.profile_picture.move(app.makePath(`public/assets/profile_pictures/${user.id}`));
 
         return response.redirect('/profile/settings');
+    }
+
+    public async logout({ response, auth }: HttpContext) {
+        await auth.use('web').logout();
+        return response.redirect('/')
     }
 }
