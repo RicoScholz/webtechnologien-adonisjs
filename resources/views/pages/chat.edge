@@ -2,7 +2,7 @@
     <header class="w-100 d-flex align-items-center justify-content-center p-3">
         @if(product.owner.id == auth.user.id)
         <div class="d-flex align-items-center">
-            <img src="/assets/profile_pictures/{{ prospect.id }}/{{ prospect.profile_picture }}" alt="avatar" width="45" class="border border-2 rounded-circle me-2">
+            <img src="/assets/profile_pictures/{{ prospect.id }}/{{ prospect.profile_picture }}" alt="avatar" width="45" height="45" class="border border-2 rounded-circle me-2">
             <div>
                 <h5 class="m-0">{{ prospect.full_name }}</h5>
                 <span class="small">Kaufinteressent</span>
@@ -11,7 +11,7 @@
         @else
         <div class="d-flex align-items-center">
             @assign(imageName = JSON.parse(product.info.item_images)[0])
-            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" alt="{{ imageName }}" width="45" class="border border-2 rounded-circle me-2">
+            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" alt="avatar" width="45" height="45" class="border border-2 rounded-circle me-2">
             <div>
                 <h5 class="m-0">{{ product.info.title }}</h5>
                 <span class="small">Verkäufer: {{ product.owner.full_name }}</span>
@@ -20,7 +20,7 @@
         @endif
     </header>
 
-    <hr>
+    <hr class="m-0">
 
     <div class="overflow-y-scroll p-2 h-100" id="chat-messages">
         @each(msg in messages)
@@ -51,9 +51,8 @@
     <form method="POST">
         {{ csrfField() }}
         <div>
-            <label for="formMessage" class="form-label d-none">Nachricht</label>
             <div class="input-group">
-                <input class="form-control p-2" type="text" id="formMessage" name="message" placeholder="Nachricht" maxlength="500" minlength="1" autocomplete="off" autofocus>
+                <input class="form-control p-2" type="text" id="formMessage" name="message" placeholder="Nachricht" aria-label="Nachricht" maxlength="500" minlength="1" autocomplete="off" autofocus>
                 <button type="submit" class="btn btn-primary">Senden</button>
             </div>
         </div>

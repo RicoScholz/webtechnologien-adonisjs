@@ -15,4 +15,4 @@ document.querySelectorAll('.needs-validation').forEach(form => {
 
         form.classList.add('was-validated')
     }, false)
-})
+});

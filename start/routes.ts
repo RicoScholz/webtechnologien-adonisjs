@@ -15,6 +15,10 @@ import AuthController from '#controllers/auth_controller';
 
 router.get('/', [ItemsController, 'allItemsShow']);
 
+router
+    .post('/', [ItemsController, 'search'])
+    .as('search');
+
 router.get('/item/:id', [ItemsController, 'singleItemShow']);
 
 router

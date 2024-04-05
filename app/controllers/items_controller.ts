@@ -10,16 +10,58 @@ import { MultipartFile } from '@adonisjs/core/bodyparser';
 export default class ItemsController {
     public async allItemsShow({ view, auth }: HttpContext) {
         await auth.check();
-        
+
         const items: Item[] = await db.from('items').where('active', true);
-        
+
         const products: Product[] = [];
         for (const info of items) {
             const owner: User = await db.from('users').where('id', info.user_id).first();
             products.push({ info, owner })
         }
 
-        return view.render('layouts/main', { page: 'pages/dashboard', products });
+        return view.render('layouts/main', { page: 'pages/dashboard', heading: 'Neuste Anzeigen', products });
+    }
+
+    public async search({ request, view, auth }: HttpContext) {
+        await auth.check()
+
+        const { query, select } = request.only(['query', 'select']);
+
+        let items: Item[] = [];
+        switch (select) {
+            case 'title': {
+                items = await db
+                    .from('items')
+                    .whereLike('title', `%${query}%`);
+                break;
+            }
+            case 'description': {
+                items = await db
+                    .from('items')
+                    .whereLike('description', `%${query}%`);
+                break;
+            }
+            case 'user': {
+                // TODO: wrong format for item-container
+                await db
+                    .from('items')
+                    .select('*')
+                    .leftJoin('users', 'items.user_id', 'users.id')
+                    .whereLike('users.full_name', `%${query}%`);
+                break;
+            }
+            default:
+                console.log('no match')
+                break;
+        }
+
+        const products: Product[] = [];
+        for (const info of items) {
+            const owner: User = await db.from('users').where('id', info.user_id).first();
+            products.push({ info, owner })
+        }
+
+        return view.render('layouts/main', { page: 'pages/dashboard', heading: `Ergebnisse für: ${query}`, products, query, select });
     }
 
     public async singleItemShow({ view, auth, params }: HttpContext) {
@@ -36,13 +78,12 @@ export default class ItemsController {
     public async ownItemsShow({ view, auth }: HttpContext) {
         await auth.check()
 
-        
         const aktiveProducts: Product[] = [];
         const activeItems: Item[] = await db.from('items').where('user_id', auth.user!.id).andWhere('active', true);
         for (const info of activeItems) {
             aktiveProducts.push({ info, owner: auth.user! })
         }
-        
+
         const inaktiveProducts: Product[] = [];
         const inaktiveItems: Item[] = await db.from('items').where('user_id', auth.user!.id).andWhere('active', false);
         for (const info of inaktiveItems) {

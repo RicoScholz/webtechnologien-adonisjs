@@ -13,40 +13,58 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" style="min-height: 80px">
       <div class="container-fluid">
+        <a class="navbar-brand" href="/">Kleinanzeigen</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="/">Kleinanzeigen</a>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <form class="mb-2 mb-lg-0 mx-auto" style="width: 40%" role="search" method="POST" action="{{ route('search') }}">
+            {{ csrfField() }}
+            <div class="input-group">
+                <select class="form-select border-light" name="select" id="searchSelect">
+                  <option value="title" {{ select == 'description' ? 'selected' : '' }}>Titel</option>
+                  <option value="description" {{ select == 'description' ? 'selected' : '' }}>Beschreibung</option>
+                  <option value="user" {{ select == 'user' ? 'selected' : '' }}>Verkäufer</option>
+                </select>
+              <input type="text" class="form-control border-light" placeholder="Nach Artikeln suchen" aria-label="Suchen" name="query" autocomplete="off" value="{{ query ? query : '' }}">
+              <button class="btn btn-outline-light" type="submit">Suchen</button>
+            </div>
+
+            <script>
+              const select = {{ select }}
+              console.log(select)
+              select ? document.querySelector('#searchSelect').value = select : null;
+              console.log(select)
+            </script>
+          </form>
+
+          <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+            @if(auth.isAuthenticated)
+              <a type="button" class="btn btn-outline-light me-2" role="button" href="/profile/add"><i class="bi bi-plus"></i> Anzeige aufgeben</a>
+
+              <div class="btn-group">
+                <button type="button" class="m-2 rounded-circle overflow-hidden border border-2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="/assets/profile_pictures/{{ auth.user.id }}/{{ auth.user.profile_picture }}" alt="avatar" width="40" height="40">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="/profile/items">Anzeigen</a></li>
+                  <li><a class="dropdown-item" href="/profile/chats">Chats</a></li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="/profile/settings">Einstellungen</a></li>
+                  <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
+                </ul>
+              </div>
+
+            @else
+              <a class="btn btn-outline-light me-2" href="/register" role="button">Registrieren</a>
+              <a class="btn btn-light me-2" href="/login" role="button">Anmelden</a>
+            @endif
           </ul>
-
-          @if(auth.isAuthenticated)
-          <a type="button" class="btn btn-outline-light me-2" role="button" href="/profile/add">
-            <i class="bi bi-plus"></i> Anzeige aufgeben
-          </a>
-
-          <div class="btn-group">
-            <button type="button" class="m-2 rounded-circle overflow-hidden border border-2" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <img src="/assets/profile_pictures/{{ auth.user.id }}/{{ auth.user.profile_picture }}" alt="avatar" width="40">
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="/profile/items">Anzeigen</a></li>
-              <li><a class="dropdown-item" href="/profile/chats">Chats</a></li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="/profile/settings">Einstellungen</a></li>
-              <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
-            </ul>
-          </div>
-          @else
-          <a class="btn btn-outline-light me-2" href="/register" role="button">Registrieren</a>
-          <a class="btn btn-light me-2" href="/login" role="button">Anmelden</a>
-          @endif
         </div>
       </div>
     </nav>
