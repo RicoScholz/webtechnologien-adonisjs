@@ -26,10 +26,14 @@
 
     <div class="mb-5">
         <label for="formFile" class="form-label">Anzeigebilder</label>
-        <input class="form-control" type="file" id="formFile" name="item_images" multiple required>
+        <input class="form-control" type="file" id="formFile" name="item_images" multiple required maxlength="5">
         <div class="invalid-feedback position-absolute">
-            Bitte wählen Sie mindestens ein Anzeigebild!
+            Bitte wählen Sie mindestens ein und maximal fünf Anzeigebilder!
         </div>
+    </div>
+
+    <div class="border border-2 w-100 mb-5 d-flex justify-content-center align-items-center" style="min-height:250px" id="multiple-img-preview">
+        <span class="fs-1 fw-medium text-body-tertiary">Bilder Vorschau</span>
     </div>
 
     <button type="submit" class="btn btn-primary ">Erstellen</button>

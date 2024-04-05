@@ -11,7 +11,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="d-flex flex-column">
   <header>
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" style="min-height: 80px">
       <div class="container-fluid">
@@ -32,13 +32,6 @@
               <input type="text" class="form-control border-light" placeholder="Nach Artikeln suchen" aria-label="Suchen" name="query" autocomplete="off" value="{{ query ? query : '' }}">
               <button class="btn btn-outline-light" type="submit">Suchen</button>
             </div>
-
-            <script>
-              const select = {{ select }}
-              console.log(select)
-              select ? document.querySelector('#searchSelect').value = select : null;
-              console.log(select)
-            </script>
           </form>
 
           <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
@@ -70,9 +63,13 @@
     </nav>
   </header>
 
-  <main>
+  <main class="flex-grow-1">
     @include(page)
   </main>
+
+  <footer class="p-5 bg-dark" data-bs-theme="dark">
+    <span>Footer</span>
+  </footer>
 </body>
 
 </html>

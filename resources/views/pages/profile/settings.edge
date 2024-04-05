@@ -1,42 +1,47 @@
 <div class="container-sm my-5 p-5  shadow rounded-3">
     <h4 class="text-center font-weight-bold mb-5">Profil von {{ auth.user.full_name }} bearbeiten</h4>
 
-    <form class="my-5 needs-validation" action="{{ route('auth.update.name') }}" method="POST" enctype="multipart/form-data" novalidate>
-        {{ csrfField() }}
-        <div class="input-group mb-5">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="fullNameInput" name="full_name" placeholder="" required>
-                <label for="fullNameInput" class="form-label">Name</label>
-                <div class="invalid-feedback position-absolute"">
-                    Bitte geben Sie Ihren neuen Namen ein!
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Aktualisieren</button>
-        </div>
-    </form>
+    <div class="row justify-content-between align-items-center">
 
-    <form class="mb-5 needs-validation" action="{{ route('auth.update.password') }}" method="POST" enctype="multipart/form-data" novalidate>
-        {{ csrfField() }}
-        <div class="input-group mb-5">
-            <div class="form-floating">
-                <input type="password" class="form-control" id="passwordInput" name="password" placeholder="" required minlength="8">
-                <label for="passwordInput" class="form-label">Passwort</label>
-                <div class="invalid-feedback position-absolute"">
-                    Bitte geben Sie mindestens 8 Zeichen ein!
+        <div class="col-12 col-xl-7">
+            <form class="my-5 needs-validation" action="{{ route('auth.update.name') }}" method="POST" enctype="multipart/form-data" novalidate>
+                {{ csrfField() }}
+                <div class="input-group mb-5">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="fullNameInput" name="full_name" placeholder="" required>
+                        <label for="fullNameInput" class="form-label">Name</label>
+                        <div class="invalid-feedback position-absolute"">
+                            Bitte geben Sie Ihren neuen Namen ein!
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aktualisieren</button>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Aktualisieren</button>
+            </form>
+        
+            <form class="mb-5 needs-validation" action="{{ route('auth.update.password') }}" method="POST" enctype="multipart/form-data" novalidate>
+                {{ csrfField() }}
+                <div class="input-group mb-5">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="" required minlength="8">
+                        <label for="passwordInput" class="form-label">Passwort</label>
+                        <div class="invalid-feedback position-absolute">
+                            Bitte geben Sie mindestens 8 Zeichen ein!
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aktualisieren</button>
+                </div>
+            </form>
         </div>
-    </form>
-
-    <form class="needs-validation" action="{{ route('auth.update.profilePicture') }}" method="POST" enctype="multipart/form-data" novalidate>
-        {{ csrfField() }}
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Profilbild</label>
+    
+        <form class="col-12 col-xl-5 d-flex flex-column align-items-center needs-validation" action="{{ route('auth.update.profilePicture') }}" method="POST" enctype="multipart/form-data" novalidate>
+            {{ csrfField() }}
+            <div class="rounded-circle border border-3 overflow-hidden position-relative mb-3" style="width: 180px; height: 180px">
+                <img src="/assets/profile_pictures/{{ auth.user.id }}/{{ auth.user.profile_picture }}" class="avatar-preview position-absolute start-50 top-50 translate-middle w-100 h-100">
+            </div>
             <div class="input-group">
                 <input class="form-control" type="file" id="formFile" name="profile_picture" required>
                 <button type="submit" class="btn btn-primary">Aktualisieren</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

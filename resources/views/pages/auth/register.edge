@@ -2,34 +2,38 @@
     {{ csrfField() }}
     <h4 class="text-center font-weight-bold mb-5">Account erstellen</h4>
 
-    <div class="form-floating mb-5">
-        <input type="text" class="form-control" id="fullNameInput" name="full_name" placeholder="" required>
-        <label for="fullNameInput" class="form-label">Name</label>
-        <div class="invalid-feedback position-absolute">
-            Bitte geben Sie ihren vollen Namen ein!
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-7">
+            <div class="form-floating mb-5">
+                <input type="text" class="form-control" id="fullNameInput" name="full_name" placeholder="" required>
+                <label for="fullNameInput" class="form-label">Name</label>
+                <div class="invalid-feedback position-absolute">
+                    Bitte geben Sie ihren vollen Namen ein!
+                </div>
+            </div>
+            <div class="form-floating mb-5">
+                <input type="email" class="form-control" id="emailInput" name="email" placeholder="" required>
+                <label for="emailInput" class="form-label">E-Mail</label>
+                <div class="invalid-feedback position-absolute">
+                    Bitte geben Sie eine gültige E-Mail-Addresse ein!
+                </div>
+            </div>
+            <div class="form-floating mb-5">
+                <input type="password" class="form-control" id="passwordInput" name="password" placeholder="" required minlength="8">
+                <label for="passwordInput" class="form-label">Passwort</label>
+                <div class="invalid-feedback position-absolute">
+                    Bitte geben Sie mindestens 8 Zeichen ein!
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-floating mb-5">
-        <input type="email" class="form-control" id="emailInput" name="email" placeholder="" required>
-        <label for="emailInput" class="form-label">E-Mail</label>
-        <div class="invalid-feedback position-absolute">
-            Bitte geben Sie eine gültige E-Mail-Addresse ein!
+    
+        <div class="col-12 col-xl-5 mb-5 d-flex flex-column align-items-center">
+            <div class="rounded-circle border border-3 overflow-hidden position-relative mb-3" style="width: 180px; height: 180px">
+                <img src="/assets/avatar-placeholder.svg" class="avatar-preview position-absolute start-50 top-50 translate-middle w-100 h-100">
+            </div>
+            <input class="form-control" type="file" id="formFile" name="profile_picture" required>
         </div>
+    
+        <button type="submit" class="btn btn-primary w-25">Register</button>
     </div>
-    <div class="form-floating mb-5">
-        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="" required minlength="8">
-        <label for="passwordInput" class="form-label">Passwort</label>
-        <div class="invalid-feedback position-absolute">
-            Bitte geben Sie mindestens 8 Zeichen ein!
-        </div>
-    </div>
-    <div class="mb-5">
-        <label for="formFile" class="form-label">Profilbild</label>
-        <input class="form-control" type="file" id="formFile" name="profile_picture" placeholder="" required>
-        <div class="invalid-feedback position-absolute">
-            Bitte wählen Sie ein Profilbild aus!
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary ">Register</button>
 </form>
