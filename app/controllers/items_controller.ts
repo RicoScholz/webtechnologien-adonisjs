@@ -25,8 +25,9 @@ export default class ItemsController {
     public async search({ request, view, auth }: HttpContext) {
         await auth.check()
 
-        const { query, select } = request.only(['query', 'select']);
-
+        let { query, select } = request.only(['query', 'select']);
+        if (!query) query = '';
+ 
         let items: Item[] = [];
         switch (select) {
             case 'title': {
@@ -42,10 +43,9 @@ export default class ItemsController {
                 break;
             }
             case 'user': {
-                // TODO: wrong format for item-container
-                await db
+                items = await db
                     .from('items')
-                    .select('*')
+                    .select('items.*')
                     .leftJoin('users', 'items.user_id', 'users.id')
                     .whereLike('users.full_name', `%${query}%`);
                 break;
