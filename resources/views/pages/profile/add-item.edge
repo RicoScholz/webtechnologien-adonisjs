@@ -17,16 +17,16 @@
         </div>
     </div>
     <div class="form-floating mb-5">
-        <input type="number" class="form-control" id="priceInput" name="price" min="0.01" placeholder="" required>
+        <input type="number" class="form-control" id="priceInput" name="price" step="0.01" min="0.01" max="10000" placeholder="" required>
         <label for="priceInput" class="form-label">Preis</label>
         <div class="invalid-feedback position-absolute">
-            Bitte wählen sie einen Preis!
+            Bitte wählen sie einen Preis zwischen 0,01€ und 10.000,00€!
         </div>
     </div>
 
     <div class="mb-5">
         <label for="formFile" class="form-label">Anzeigebilder</label>
-        <input class="form-control" type="file" id="formFile" name="item_images" multiple required maxlength="5">
+        <input class="form-control" type="file" id="formFile" name="item_images" multiple required maxlength="5"  accept="image/png, image/jpeg, image/jpg, image/webp">
         <div class="invalid-feedback position-absolute">
             Bitte wählen Sie mindestens ein und maximal fünf Anzeigebilder!
         </div>

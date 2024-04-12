@@ -34,7 +34,7 @@ export const addItemValidator = vine.compile(
   vine.object({
     title: vine.string().trim(),
     description: vine.string().trim(),
-    price: vine.number().positive()
+    price: vine.number().positive().min(0.01).max(10000),
   })
 );
 

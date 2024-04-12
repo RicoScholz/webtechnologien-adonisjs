@@ -39,7 +39,7 @@
                 <img src="/assets/profile_pictures/{{ auth.user.id }}/{{ auth.user.profile_picture }}" class="avatar-preview position-absolute start-50 top-50 translate-middle w-100 h-100">
             </div>
             <div class="input-group">
-                <input class="form-control" type="file" id="formFile" name="profile_picture" required>
+                <input class="form-control" type="file" id="formFile" name="profile_picture" required  accept="image/png, image/jpeg, image/jpg, image/webp">
                 <button type="submit" class="btn btn-primary">Aktualisieren</button>
             </div>
         </form>
