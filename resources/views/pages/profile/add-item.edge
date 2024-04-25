@@ -3,17 +3,17 @@
     <h4 class="text-center font-weight-bold mb-5">Anzeige aufgeben</h4>
 
     <div class="form-floating mb-5">
-        <input type="text" class="form-control" id="titleInput" name="title" placeholder="" required>
+        <input type="text" class="form-control" id="titleInput" name="title" placeholder="" required maxlength="50">
         <label for="titleInput" class="form-label">Titel</label>
         <div class="invalid-feedback position-absolute">
-            Bitte geben Sie einen Titel ein!
+            Bitte geben Sie einen Titel ein! (max. 50 Zeichen)
         </div>
     </div>
     <div class="form-floating mb-5">
-        <textarea class="form-control" id="descriptionInput" name="description" placeholder="" required></textarea>
+        <textarea class="form-control" id="descriptionInput" name="description" placeholder="" required maxlength="500"></textarea>
         <label for="descriptionInput" class="form-label">Beschreibung</label>
         <div class="invalid-feedback position-absolute">
-            Bitte geben Sie eine passende Beschreibung ein!
+            Bitte geben Sie eine passende Beschreibung ein! (max. 1200 Zeichen)
         </div>
     </div>
     <div class="form-floating mb-5">

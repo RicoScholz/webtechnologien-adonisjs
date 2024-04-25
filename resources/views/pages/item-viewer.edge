@@ -1,35 +1,42 @@
 <div class="container-sm my-5">
     @if(product.info.active || auth.user.id == product.owner.id)
     <div class="row">
-        <div id="carouselExampleIndicators" class="carousel slide col-5 border p-0">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div>
+        <div class="col-5">
+            <div id="carouselExampleIndicators" class="carousel slide border p-0">
+                <div class="carousel-indicators">
                     @each((imageName, index) in JSON.parse(product.info.item_images))
-                    <div class="carousel-item {{ index === 0 ? 'active' : '' }}">
-                        <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" class="d-block w-100"
-                            alt="{{ imageName }}">
-                    </div>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ index }}" class="{{ index === 0 ? 'active' : '' }}"
+                        aria-current="true" aria-label="Slide {{ index + 1 }}"></button>
                     @endeach
                 </div>
+                <div class="carousel-inner" style="height: 22rem;">
+                    <div>
+                        @each((imageName, index) in JSON.parse(product.info.item_images))
+                        <div class="carousel-item {{ index === 0 ? 'active' : '' }}">
+                            <img src="/assets/items/{{ product.info.id }}/{{ imageName }}" class="d-block w-100 h-100" style="object-fit: cover;"
+                                alt="{{ imageName }}">
+                        </div>
+                        @endeach
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+
+            <div class="px-4 py-4">
+                <h2 class="text-break">{{ product.info.title }}</h2>
+                <div class="text-success text-lg fs-3">
+                    {{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</div>
+                <div>erstellt am {{ new Date(product.owner.created_at).toLocaleDateString('de-DE')  }}</div>
+            </div>
         </div>
 
         <div class="px-5 py-4 col-4">
@@ -76,13 +83,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="px-4 py-4">
-        <h2>{{ product.info.title }}</h2>
-        <div class="text-success text-lg fs-3">
-            {{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</div>
-        <div>erstellt am {{ new Date(product.owner.created_at).toLocaleDateString('de-DE')  }}</div>
     </div>
 
     @else

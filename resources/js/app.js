@@ -43,6 +43,7 @@ imageInputs.forEach(imgInp => {
                 img.src = URL.createObjectURL(file);
                 img.style.width = '20%';
                 img.style.height = '250px';
+                img.style.objectFit = 'cover';
 
                 imageContainer.appendChild(img);
             }
