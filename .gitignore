@@ -9,6 +9,9 @@ tmp
 .env.production.local
 .env.development.local
 
+# temporary files
+public/assets/hot.json
+
 # Build tools specific
 npm-debug.log
 yarn-error.log
