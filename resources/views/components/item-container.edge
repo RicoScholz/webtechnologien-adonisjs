@@ -1,11 +1,11 @@
 <div class="container-sm my-5">
   <h4>{{ heading }}</h4>
-  <div class="container-sm p-0 d-flex flex-row flex-wrap">
+  <div class="d-flex flex-wrap gap-3">
     @each(product in products)
-    <div class="card m-2 overflow-hidden border-0 shadow-sm" style="width: 18rem;">
+    <div class="card border-0 shadow-sm" style="width: 18rem;">
       <div class="position-relative" style="height: 12rem;">
         <img src="/assets/items/{{ product.info.id }}/{{ JSON.parse(product.info.item_images)[0] }}"
-          class="card-img-top w-100 h-100" alt="placeholder" style="object-fit: cover;">
+          class="w-100 h-100" alt="placeholder" style="object-fit: cover;">
         <span
           class="position-absolute bottom-0 end-0 mb-2 bg-warning p-1 ps-2 rounded-start-4">{{ product.info.price.toLocaleString('de-DE', {minimumFractionDigits: 2}) }}€</span>
       </div>
